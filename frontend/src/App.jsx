@@ -12,6 +12,7 @@ import Signin from './Signin';
 import Profile from './Profile';
 import AddProjects from './AddProjects';
 import Feed from "./Feed";
+import ProjectDetails from "./ProjectDetails";
 function App() {
 
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/feed/:id" element={<Feed />} />
         <Route path="/feed/:id/profile" element={<Profile />} />
         <Route path="/feed/:id/add_project" element={<AddProjects />} />
+        <Route path="/feed/:id/project/:projectId" element={<ProjectDetails />} />
         <Route
           path="*"
           element={<Navigate to="/login" replace />}
