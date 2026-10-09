@@ -1,0 +1,135 @@
+.signin-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 16px;
+  background-color: #f4f7fb;
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+.signin-card {
+  width: 100%;
+  max-width: 440px;
+  padding: 36px;
+  background-color: #ffffff;
+  border: 1px solid #e5eaf1;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(20, 40, 80, 0.06);
+  box-sizing: border-box;
+}
+
+.signin-card h1 {
+  margin: 0 0 8px;
+  color: #172b4d;
+  font-size: 30px;
+  text-align: center;
+}
+
+.signin-description {
+  margin: 0 0 28px;
+  color: #68778d;
+  font-size: 14px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.signin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.signin-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #27364b;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.signin-form input {
+  width: 100%;
+  padding: 12px 13px;
+  border: 1px solid #d5deea;
+  border-radius: 7px;
+  background-color: #ffffff;
+  color: #172b4d;
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.signin-form input::placeholder {
+  color: #9aa6b7;
+}
+
+.signin-form input:focus {
+  border-color: #3478f6;
+  box-shadow: 0 0 0 3px rgba(52, 120, 246, 0.12);
+}
+
+.signin-button {
+  width: 100%;
+  margin-top: 4px;
+  padding: 13px;
+  border: none;
+  border-radius: 7px;
+  background-color: #2869df;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.signin-button:hover {
+  background-color: #1e55bb;
+}
+
+.signin-button:disabled {
+  background-color: #8ba9e0;
+  cursor: not-allowed;
+}
+
+.signin-message {
+  margin: 0;
+  padding: 11px 12px;
+  border-radius: 6px;
+  background-color: #fff0f0;
+  color: #c03945;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.signin-footer {
+  margin: 22px 0 0;
+  color: #68778d;
+  font-size: 14px;
+  text-align: center;
+}
+
+.signin-footer a {
+  margin-left: 4px;
+  color: #2869df;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.signin-footer a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .signin-card {
+    padding: 26px 20px;
+  }
+
+  .signin-card h1 {
+    font-size: 26px;
+  }
+}
