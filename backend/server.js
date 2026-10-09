@@ -9,7 +9,7 @@ const Project = require("./models/Project");
 const authMiddleware = require("./middleware/authMiddleware");
 
 const User = require("./models/User");
-
+const Comment = require("./models/Comment");
 const app = express();
 const dns = require("dns");
 dns.setServers([
@@ -250,6 +250,91 @@ app.get("/api/users/:id", async (req, res) => {
     });
   }
 });
+
+// GET comments for a specific project
+app.get(
+  "/api/projects/:projectId/comments",
+  async (req, res) => {
+    try {
+      const { projectId } = req.params;
+
+      if (!mongoose.Types.ObjectId.isValid(projectId)) {
+        return res.status(400).json({
+          message: "Invalid project ID",
+        });
+      }
+
+      const comments = await Comment.find({
+        project: projectId,
+      })
+        .populate("user", "name")
+        .sort({ createdAt: -1 });
+
+      res.json(comments);
+    } catch (error) {
+      console.error("Fetch comments error:", error);
+      res.status(500).json({
+        message: "Failed to fetch comments",
+      });
+    }
+  }
+);
+
+// POST a comment on a specific project
+app.post(
+  "/api/projects/:projectId/comments",
+  authMiddleware,
+  async (req, res) => {
+    try {
+      const { projectId } = req.params;
+      const { text } = req.body;
+
+      if (!mongoose.Types.ObjectId.isValid(projectId)) {
+        return res.status(400).json({
+          message: "Invalid project ID",
+        });
+      }
+
+      if (!text || !text.trim()) {
+        return res.status(400).json({
+          message: "Comment cannot be empty",
+        });
+      }
+
+      if (text.trim().length > 1000) {
+        return res.status(400).json({
+          message: "Comment must be 1000 characters or fewer",
+        });
+      }
+
+      const project = await Project.findById(projectId);
+
+      if (!project) {
+        return res.status(404).json({
+          message: "Project not found",
+        });
+      }
+
+      const comment = await Comment.create({
+        project: projectId,
+        user: req.user.id,
+        text: text.trim(),
+      });
+
+      await comment.populate("user", "name");
+
+      res.status(201).json({
+        message: "Comment added successfully",
+        comment,
+      });
+    } catch (error) {
+      console.error("Add comment error:", error);
+      res.status(500).json({
+        message: "Failed to add comment",
+      });
+    }
+  }
+);
 
 // Start server
 const PORT = process.env.PORT || 5000;
