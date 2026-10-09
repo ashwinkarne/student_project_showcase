@@ -1,0 +1,144 @@
+.add-project-page {
+min-height: 100vh;
+padding: 40px 20px;
+background: #f5f6f8;
+color: #202938;
+}
+
+.add-project-header {
+max-width: 760px;
+margin: 0 auto 28px;
+}
+
+.back-link {
+display: inline-block;
+margin-bottom: 24px;
+color: #46566b;
+text-decoration: none;
+font-size: 14px;
+font-weight: 500;
+}
+
+.back-link:hover {
+color: #172b4d;
+}
+
+.add-project-header h1 {
+margin: 0 0 8px;
+font-size: 30px;
+font-weight: 700;
+letter-spacing: -0.6px;
+}
+
+.add-project-header p {
+margin: 0;
+color: #667085;
+font-size: 15px;
+line-height: 1.6;
+}
+
+.add-project-form {
+max-width: 760px;
+margin: 0 auto;
+padding: 32px;
+background: #ffffff;
+border: 1px solid #e0e5eb;
+border-radius: 12px;
+box-shadow: 0 4px 16px rgba(16, 24, 40, 0.04);
+}
+
+.form-group {
+display: flex;
+flex-direction: column;
+gap: 9px;
+margin-bottom: 24px;
+}
+
+.form-group label {
+font-size: 14px;
+font-weight: 600;
+color: #344054;
+}
+
+.form-group input,
+.form-group textarea {
+width: 100%;
+box-sizing: border-box;
+padding: 12px 14px;
+border: 1px solid #d0d5dd;
+border-radius: 7px;
+background: #ffffff;
+color: #202938;
+font: inherit;
+font-size: 14px;
+outline: none;
+transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+border-color: #52657c;
+box-shadow: 0 0 0 3px rgba(82, 101, 124, 0.12);
+}
+
+.form-group textarea {
+resize: vertical;
+min-height: 120px;
+line-height: 1.6;
+}
+
+.form-group input[type="file"] {
+padding: 10px;
+background: #fafbfc;
+}
+
+.form-group small {
+color: #667085;
+font-size: 12px;
+}
+
+.form-error {
+margin-bottom: 24px;
+padding: 12px 14px;
+border: 1px solid #f0c4c4;
+border-radius: 7px;
+background: #fff5f5;
+color: #a4262c;
+font-size: 14px;
+}
+
+.publish-project-btn {
+width: 100%;
+padding: 13px 18px;
+border: none;
+border-radius: 7px;
+background: #26384d;
+color: #ffffff;
+font-size: 15px;
+font-weight: 600;
+cursor: pointer;
+transition: background 0.2s;
+}
+
+.publish-project-btn:hover:not(:disabled) {
+background: #192a3e;
+}
+
+.publish-project-btn:disabled {
+cursor: not-allowed;
+opacity: 0.65;
+}
+
+@media (max-width: 600px) {
+.add-project-page {
+padding: 24px 14px;
+}
+
+.add-project-header h1 {
+font-size: 25px;
+}
+
+.add-project-form {
+padding: 22px 18px;
+}
+}

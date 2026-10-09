@@ -23,8 +23,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/feed/:id" element={<Feed />} />
         <Route path="/feed/:id/profile" element={<Profile />} />
-        <Route path="/add-projects" element={<AddProjects />} />
-        
+        <Route path="/feed/:id/add_project" element={<AddProjects />} />
         <Route
           path="*"
           element={<Navigate to="/login" replace />}

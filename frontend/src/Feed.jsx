@@ -89,6 +89,8 @@ function Feed() {
           >
             Profile
           </Link>
+          
+
 
           <button
             onClick={handleSignOut}
@@ -118,9 +120,12 @@ function Feed() {
                 Discover ideas, technologies, and work from fellow students.
               </p>
             </div>
-            <Link to="/projects/new" className="publish-project-button">
-              <span aria-hidden="true">＋</span> Publish project
-            </Link>
+            <Link
+            to={`/feed/${user.id}/add_project`}
+            className="publish-project-button">
+          <span aria-hidden="true">＋</span> Publish project
+          </Link>
+            
           </div>
 
           {loading && <p className="feed-message">Loading projects...</p>}

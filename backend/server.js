@@ -112,32 +112,40 @@ app.post("/api/auth/signup", async (req, res) => {
   }
 });
 
-
-app.post("/api/addproject", authMiddleware, async (req, res) => {
+app.post("/api/addproject", async (req, res) => {
   try {
     const {
+      userId,
+      name,
       title,
       description,
       technologies,
       githubUrl,
-      liveDemoUrl,
-      coverImage
+      liveDemoUrl
     } = req.body;
 
-    if (!title || !description || !githubUrl) {
+    if (!userId || !title || !description || !githubUrl) {
       return res.status(400).json({
-        message: "Title, description and GitHub URL are required"
+        message: "User ID, title, description and GitHub URL are required"
+      });
+    }
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found"
       });
     }
 
     const project = await Project.create({
-      title,
-      description,
-      technologies: technologies || [],
-      githubUrl,
+      title: title.trim(),
+      description: description.trim(),
+      technologies: Array.isArray(technologies) ? technologies : [],
+      githubUrl: githubUrl.trim(),
       liveDemoUrl: liveDemoUrl || "",
-      coverImage: coverImage || "",
-      user: req.userId
+      coverImage: "",
+      user: user._id
     });
 
     res.status(201).json({
@@ -145,9 +153,10 @@ app.post("/api/addproject", authMiddleware, async (req, res) => {
       project
     });
   } catch (error) {
-    console.error("Project creation error:", error.message);
+    console.error("Project creation error:", error);
+
     res.status(500).json({
-      message: "Failed to publish project"
+      message: error.message || "Failed to publish project"
     });
   }
 });
