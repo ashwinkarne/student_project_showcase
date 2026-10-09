@@ -50,7 +50,7 @@ function Profile() {
 
   return (
     <main className="profile-page">
-      <Link to="/feed" className="profile-back">
+      <Link to={`/feed/${id}`} className="profile-back">
         &larr; Back to feed
       </Link>
 
