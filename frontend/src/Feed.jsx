@@ -137,7 +137,7 @@ function Feed() {
               <div className="empty-projects-mark" aria-hidden="true">＋</div>
               <h3>Be the first to share a project</h3>
               <p>Publish your work and give the community something new to discover.</p>
-              <Link to="/projects/new" className="publish-project-button">
+              <Link to={`/feed/${user.id}/add_project`} className="publish-project-button">
                 Publish your project
               </Link>
             </div>
@@ -153,28 +153,10 @@ function Feed() {
                   className="project-card"
                   key={project._id}
                 >
-                  {project.coverImage ? (
-                    <div className="project-image-wrap">
-                      <img
-                        src={project.coverImage}
-                        alt={`${project.title} cover`}
-                        className="project-image"
-                      />
-                    </div>
-                  ) : (
-                    <div className="project-image-placeholder">
-                      <span>PROJECT</span>
-                    </div>
-                  )}
-
                   <div className="project-content">
                     <div className="project-card-heading">
                       <h3>{project.title}</h3>
                     </div>
-
-                    <p className="project-description">
-                      {project.description}
-                    </p>
 
                     {project.technologies?.length > 0 && (
                       <div className="project-technologies">
@@ -195,36 +177,12 @@ function Feed() {
                       </div>
 
                       <div className="project-card-actions">
-                        {publisher._id && (
-                          <Link
-                            to={`/profile/${publisher._id}`}
-                            className="project-action secondary-action"
-                          >
-                            View profile
-                          </Link>
-                        )}
-
-                        {project.githubUrl && (
-                          <a
-                            href={project.githubUrl}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="project-action primary-action"
-                          >
-                            GitHub <span aria-hidden="true">↗</span>
-                          </a>
-                        )}
-
-                        {project.liveDemoUrl && (
-                          <a
-                            href={project.liveDemoUrl}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="project-action secondary-action"
-                          >
-                            Live demo <span aria-hidden="true">↗</span>
-                          </a>
-                        )}
+                        <Link
+                          to={`/feed/${user.id}/project/${project._id}`}
+                          className="project-action primary-action"
+                        >
+                          View more <span aria-hidden="true">→</span>
+                        </Link>
                       </div>
                     </div>
                   </div>
