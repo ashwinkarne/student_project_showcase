@@ -113,7 +113,7 @@ app.post("/api/auth/signup", async (req, res) => {
 });
 
 
-app.post("/api/projects", authMiddleware, async (req, res) => {
+app.post("/api/addproject", authMiddleware, async (req, res) => {
   try {
     const {
       title,
@@ -188,6 +188,60 @@ app.delete("/api/projects/:id", authMiddleware, async (req, res) => {
     });
   }
 });
+
+
+// GET /api/projects — fetch all projects for the feed
+app.get("/api/projects", authMiddleware, async (req, res) => {
+  try {
+    const projects = await Project.find()
+      .populate("user", "name rollNumber")
+      .sort({ createdAt: -1 });
+
+    res.status(200).json({ projects });
+  } catch (error) {
+    console.error("Fetch projects error:", error.message);
+
+    res.status(500).json({
+      message: "Failed to fetch projects"
+    });
+  }
+});
+
+
+
+app.use(express.json());
+app.use("/api/auth", require("./routes/authRoutes"));
+
+
+
+
+
+app.get("/api/users/:id", async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id).select(
+      "-password"
+    );
+
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+
+    res.json({ user });
+  } catch (error) {
+    if (error.name === "CastError") {
+      return res.status(400).json({
+        message: "Invalid user ID",
+      });
+    }
+
+    res.status(500).json({
+      message: "Failed to fetch user profile",
+    });
+  }
+});
+
 // Start server
 const PORT = process.env.PORT || 5000;
 

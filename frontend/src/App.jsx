@@ -1,22 +1,36 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate
+} from "react-router-dom";
+
 import LandingPage from './LandingPage';
 import Login from './Login';
 import Signin from './Signin';
 import Profile from './Profile';
 import AddProjects from './AddProjects';
+import Feed from "./Feed";
 function App() {
 
   return (
-    <Router>
+    
+    <BrowserRouter>
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/login" element={<Login />} />
         <Route path="/signin" element={<Signin />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/feed/:id" element={<Feed />} />
+        <Route path="/feed/:id/profile" element={<Profile />} />
         <Route path="/add-projects" element={<AddProjects />} />
+        
+        <Route
+          path="*"
+          element={<Navigate to="/login" replace />}
+        />
       </Routes>
-    </Router>
+    </BrowserRouter>
   );
 }
 
