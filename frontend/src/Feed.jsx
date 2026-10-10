@@ -84,7 +84,7 @@ function Feed() {
 
         <div className="feed-header-actions">
           <Link
-            to={`/feed/${user._id}/profile`}
+            to={`/feed/${user.id}/profile`}
             className="profile-button"
           >
             Profile

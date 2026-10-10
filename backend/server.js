@@ -280,6 +280,62 @@ app.get(
   }
 );
 
+// // POST a comment on a specific project
+// app.post(
+//   "/api/projects/:projectId/comments",
+//   authMiddleware,
+//   async (req, res) => {
+//     try {
+//       const { projectId } = req.params;
+//       const { text } = req.body;
+
+//       if (!mongoose.Types.ObjectId.isValid(projectId)) {
+//         return res.status(400).json({
+//           message: "Invalid project ID",
+//         });
+//       }
+
+//       if (!text || !text.trim()) {
+//         return res.status(400).json({
+//           message: "Comment cannot be empty",
+//         });
+//       }
+
+//       if (text.trim().length > 1000) {
+//         return res.status(400).json({
+//           message: "Comment must be 1000 characters or fewer",
+//         });
+//       }
+
+//       const project = await Project.findById(projectId);
+
+//       if (!project) {
+//         return res.status(404).json({
+//           message: "Project not found",
+//         });
+//       }
+
+//       const comment = await Comment.create({
+//         project: projectId,
+//         user: req.user.id,
+//         text: text.trim(),
+//       });
+
+//       await comment.populate("user", "name");
+
+//       res.status(201).json({
+//         message: "Comment added successfully",
+//         comment,
+//       });
+//     } catch (error) {
+//       console.error("Add comment error:", error);
+//       res.status(500).json({
+//         message: "Failed to add comment",
+//       });
+//     }
+//   }
+// );
+
 // POST a comment on a specific project
 app.post(
   "/api/projects/:projectId/comments",
@@ -288,6 +344,15 @@ app.post(
     try {
       const { projectId } = req.params;
       const { text } = req.body;
+
+      // Support the user ID format set by your auth middleware
+      const userId = req.user?.userId || req.user?.id || req.user?._id || req.userId;
+
+      if (!userId || !mongoose.Types.ObjectId.isValid(userId)) {
+        return res.status(401).json({
+          message: "Valid authenticated user ID not found",
+        });
+      }
 
       if (!mongoose.Types.ObjectId.isValid(projectId)) {
         return res.status(400).json({
@@ -317,7 +382,7 @@ app.post(
 
       const comment = await Comment.create({
         project: projectId,
-        user: req.user.id,
+        user: userId,
         text: text.trim(),
       });
 
@@ -329,13 +394,13 @@ app.post(
       });
     } catch (error) {
       console.error("Add comment error:", error);
+
       res.status(500).json({
         message: "Failed to add comment",
       });
     }
   }
 );
-
 // Start server
 const PORT = process.env.PORT || 5000;
 
